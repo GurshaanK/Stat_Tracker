@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Games() {
+export default function Matches() {
   return (
     <div>
-      <h1>Games</h1>
+      <h1>Matches</h1>
     </div>
   );
 }

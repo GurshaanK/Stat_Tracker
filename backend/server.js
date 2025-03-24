@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const Player = require("./models/player");
 require("dotenv").config();
 
 const app = express();
@@ -16,20 +17,16 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-// Define Schema & Model
-const ItemSchema = new mongoose.Schema({ name: String });
-const Item = mongoose.model("Item", ItemSchema);
-
 // API Routes
-app.get("/items", async (req, res) => {
-  const items = await Item.find();
-  res.json(items);
-});
-
-app.post("/items", async (req, res) => {
-  const newItem = new Item({ name: req.body.name });
-  await newItem.save();
-  res.json(newItem);
+app.get("/players", async (req, res) => {
+  try {
+    console.log("Getting Players");
+    const players = await Player.find();
+    console.log(players);
+    res.json(players);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 const PORT = process.env.PORT || 5001;
