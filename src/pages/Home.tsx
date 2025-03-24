@@ -1,4 +1,5 @@
 import React from "react";
+import Games from "../components/Games";
 
 function Home() {
   return (
@@ -9,6 +10,7 @@ function Home() {
       <section className="h-3 bg-green-400 flex items-center justify-center text-3xl p-12 md:p-14 lg:p-16">
         <p>lorem ipsum dolor </p>
       </section>
+      <Games />
     </div>
   );
 }
