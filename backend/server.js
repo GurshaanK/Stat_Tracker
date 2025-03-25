@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Player = require("./models/player");
+const Team = require("./models/team");
 require("dotenv").config();
 
 const app = express();
@@ -26,6 +27,31 @@ app.get("/players", async (req, res) => {
     res.json(players);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/teams", async (req, res) => {
+  try {
+    console.log("Getting Teams");
+    const teams = await Team.find();
+    console.log(teams);
+    res.json(teams);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post("/add-team", async (req, res) => {
+  const { name, conference, division, ppg, w, l } = req.body;
+
+  try {
+    const newTeam = new Team({ name, conference, division, ppg, w, l });
+    await newTeam.save();
+    res
+      .status(201)
+      .json({ message: "Player added successfully!", player: newPlayer });
+  } catch (error) {
+    res.status(500).json({ message: "Error adding team", error });
   }
 });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Matches from "../components/Matches";
 import Players from "../components/Players";
+import Teams from "../components/Teams";
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
       </section>
       <Matches />
       <Players />
+      <Teams />
     </div>
   );
 }
