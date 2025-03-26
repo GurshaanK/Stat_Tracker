@@ -26,10 +26,11 @@ export default function Players() {
         </thead>
         <tbody>
           {players.map((player) => (
-            <tr key={player._id}>
-              <td>{player.name}</td>
-              <td>{player.position}</td>
-              <td>{player.team_id}</td>
+            <tr key={player.Rk}>
+              <td>{player.Player}</td>
+              <td>{player.Pos}</td>
+              <td>{player.Tm}</td>
+              <td>{player["2P"]}</td>
             </tr>
           ))}
         </tbody>

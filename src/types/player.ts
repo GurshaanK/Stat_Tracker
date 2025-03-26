@@ -1,7 +1,7 @@
 export interface Player {
   _id: string;
   Rk: number; // Rank
-  Name: string; // Player Name
+  Player: string; // Player Name
   Pos: string; // Position
   Age: number; // Age
   Tm: string; // Team Abbreviation
@@ -10,16 +10,16 @@ export interface Player {
   MP: number; // Minutes Per Game
   FG: number; // Field Goals Made
   FGA: number; // Field Goals Attempted
-  FGPercent: number; // Field Goal Percentage
-  ThreeP: number; // Three-Pointers Made
-  ThreePA: number; // Three-Pointers Attempted
-  ThreePPercent: number; // Three-Point Percentage
-  TwoP: number; // Two-Pointers Made
-  TwoPA: number; // Two-Pointers Attempted
-  TwoPPercent: number; // Two-Point Percentage
+  "FG%": number; // Field Goal Percentage
+  "3P": number; // Three-Pointers Made
+  "3PA": number; // Three-Pointers Attempted
+  "3P%": number; // Three-Point Percentage
+  "2P": number; // Two-Pointers Made
+  "2PA": number; // Two-Pointers Attempted
+  "2P%": number; // Two-Point Percentage
   FT: number; // Free Throws Made
   FTA: number; // Free Throws Attempted
-  FTPercent: number; // Free Throw Percentage
+  "FT%": number; // Free Throw Percentage
   ORB: number; // Offensive Rebounds
   DRB: number; // Defensive Rebounds
   TRB: number; // Total Rebounds
