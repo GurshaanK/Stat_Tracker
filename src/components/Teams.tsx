@@ -20,7 +20,7 @@ export default function Players() {
   return (
     <div className="container mx-auto p-4 bg-amber-50 mt-5">
       <button
-        onClick={() => setPopupVisible(true)}
+        onClick={() => setPopupVisible(!popupVisible)}
         className="p-5 text-center bg-blue-50"
       >
         Add Team
