@@ -39,10 +39,10 @@ export default function Players() {
         </thead>
         <tbody>
           {teams.map((team) => (
-            <tr key={team.name}>
-              <td>{team.name}</td>
+            <tr key={team.ACR}>
+              <td>{team.Tm}</td>
               <td>
-                {team.w}-{team.l}
+                {team.W}-{team.L}
               </td>
             </tr>
           ))}

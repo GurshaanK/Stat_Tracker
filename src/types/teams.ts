@@ -26,4 +26,6 @@ export interface Team {
   TOV: number; // Turnovers
   PF: number; // Personal Fouls
   PTS: number; // Total Points
+  W: number; // Wins
+  L: number; // Losses
 }

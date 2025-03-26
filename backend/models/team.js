@@ -27,6 +27,8 @@ const teamSchema = new mongoose.Schema({
   TOV: { type: Number, required: true }, // Turnovers
   PF: { type: Number, required: true }, // Personal Fouls
   PTS: { type: Number, required: true }, // Total Points
+  W: { type: Number, required: true }, // Wins
+  L: { type: Number, required: true }, // Losses
 });
 
 const Team = mongoose.model("Team", teamSchema);
