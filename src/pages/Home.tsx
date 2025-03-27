@@ -1,20 +1,14 @@
-import React from "react";
-import Matches from "../components/Matches";
-import Players from "../components/Players";
-import Teams from "../components/Teams";
+import React, { useState, useEffect } from "react";
+// import Matches from "../components/Matches";
+// import Players from "../components/Players";
+// import Teams from "../components/Teams";
 
 function Home() {
   return (
-    <div>
+    <div className={"bg-gray-300 w-full min-h-screen"}>
       <h1 className="text-3x1 font-bold underline bg-blue-500 text-white">
         Welcome to Home
       </h1>
-      <section className="h-3 bg-green-400 flex items-center justify-center text-3xl p-12 md:p-14 lg:p-16">
-        <p>lorem ipsum dolor </p>
-      </section>
-      <Matches />
-      <Players />
-      <Teams />
     </div>
   );
 }

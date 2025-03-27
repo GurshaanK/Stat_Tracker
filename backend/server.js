@@ -41,6 +41,25 @@ app.get("/teams", async (req, res) => {
   }
 });
 
+app.delete("/teams/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find and delete the team by its ID
+    const deletedTeam = await Team.findByIdAndDelete(id);
+
+    if (!deletedTeam) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Team deleted successfully", team: deletedTeam });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting team", error });
+  }
+});
+
 app.post("/add-team", async (req, res) => {
   const { name, conference, division, ppg, w, l } = req.body;
 

@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Player } from "../types/player";
 
-export default function Players() {
-  const [players, setPlayers] = useState<Player[]>([]);
-
+export default function Players({ players }: { players: Player[] }) {
   console.log("Players:", players);
-
-  useEffect(() => {
-    fetch("http://localhost:5001/players")
-      .then((res) => res.json())
-      .then((data) => setPlayers(data))
-      .catch((error) => console.error("Error fetching players:", error));
-  }, []);
 
   return (
     <div className="container mx-auto p-4 bg-amber-50">
