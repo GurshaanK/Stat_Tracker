@@ -61,16 +61,69 @@ app.delete("/teams/:id", async (req, res) => {
 });
 
 app.post("/add-team", async (req, res) => {
-  const { name, conference, division, ppg, w, l } = req.body;
-
   try {
-    const newTeam = new Team({ name, conference, division, ppg, w, l });
+    // Log the received request body
+    console.log("Received data:", req.body);
+
+    // Validate required fields
+    const requiredFields = [
+      "Tm",
+      "ACR",
+      "G",
+      "FG",
+      "FGA",
+      "3P",
+      "3PA",
+      "2P",
+      "2PA",
+      "FT",
+      "FTA",
+      "PTS",
+      "W",
+      "L",
+    ];
+    const missingFields = requiredFields.filter(
+      (field) => req.body[field] === undefined
+    );
+
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        message: `Missing required fields: ${missingFields.join(", ")}`,
+      });
+    }
+
+    // Create and save the new team document
+    const newTeam = new Team(req.body);
     await newTeam.save();
+
     res
       .status(201)
-      .json({ message: "Player added successfully!", player: newPlayer });
+      .json({ message: "Team added successfully!", team: newTeam });
   } catch (error) {
-    res.status(500).json({ message: "Error adding team", error });
+    console.error("Error saving team:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+});
+
+app.put("/edit-team/:id", async (req, res) => {
+  try {
+    const updatedTeam = await Team.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedTeam) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+    res.json({ message: "Team updated successfully", team: updatedTeam });
+  } catch (error) {
+    console.error("Error updating team:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
   }
 });
 
