@@ -10,8 +10,18 @@ export default function TeamPage() {
   const [deleteTeamVisible, setDeleteTeamVisible] = useState<boolean>(false);
   const [addTeamVisible, setAddTeamVisible] = useState<boolean>(false);
   const [editTeamVisible, setEditTeamVisible] = useState<boolean>(false);
+  const [top5Teams, setTop5Teams] = useState<Team[]>([]);
 
   console.log("Teams:", teams);
+
+  console.log("Top Teams:", top5Teams);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/teams/topWins")
+      .then((res) => res.json())
+      .then((data) => setTop5Teams(data))
+      .catch((err) => console.error("Error fetching top 5 teams:", err));
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:5001/teams")
@@ -133,6 +143,18 @@ export default function TeamPage() {
           setEditTeamVisible={setEditTeamVisible}
         />
         <TeamTable data={teams} />
+        {top5Teams.length > 0 && (
+          <div className="mt-6">
+            <h2 className="text-lg font-semibold mb-2">Top 5 Teams by Wins</h2>
+            <ul className="list-disc ml-6 text-gray-700">
+              {top5Teams.map((team, index) => (
+                <li key={index}>
+                  {team.Tm} — {team.W} wins
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
