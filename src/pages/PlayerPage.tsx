@@ -3,6 +3,7 @@ import { Player } from "../types/player";
 
 export default function PlayerPage() {
   const [players, setPlayers] = useState<Player[]>([]);
+  console.log(players);
 
   useEffect(() => {
     fetch("http://localhost:5001/players")

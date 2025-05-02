@@ -54,7 +54,7 @@ function TeamTable({ data }: { data: Team[] }) {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              FG %
+              FG%
             </th>
             <th
               scope="col"
@@ -72,7 +72,7 @@ function TeamTable({ data }: { data: Team[] }) {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              3P %
+              3P%
             </th>
             <th
               scope="col"
@@ -90,19 +90,7 @@ function TeamTable({ data }: { data: Team[] }) {
               scope="col"
               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              FT %
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              OR
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              DR
+              FT%
             </th>
             <th
               scope="col"
@@ -135,7 +123,7 @@ function TeamTable({ data }: { data: Team[] }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
-                  {roundToDecimals(row.PTS / row.G, 1)}
+                  {roundToDecimals(row.PTS / (row.W + row.L), 1)}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -150,7 +138,7 @@ function TeamTable({ data }: { data: Team[] }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
-                  {roundToDecimals(row["FG%"] * 100, 1)}
+                  {roundToDecimals((row.FG / row.FGA) * 100, 1)}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -165,7 +153,7 @@ function TeamTable({ data }: { data: Team[] }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
-                  {roundToDecimals(row["3P%"] * 100, 1)}
+                  {roundToDecimals((row["3P"] / row["3PA"]) * 100, 1)}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -180,22 +168,12 @@ function TeamTable({ data }: { data: Team[] }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
-                  {roundToDecimals(row["FT%"] * 100, 1)}
+                  {roundToDecimals((row.FT / row.FTA) * 100, 1)}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900">
-                  {roundToDecimals(row.ORB / row.G, 1)}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {roundToDecimals(row.DRB / row.G, 1)}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
-                  {roundToDecimals((row.W / row.G) * 100, 1)}
+                  {roundToDecimals((row.W / (row.W + row.L)) * 100, 1)}
                 </div>
               </td>
             </tr>

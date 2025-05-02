@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Team } from "../types/teams";
 import TeamTable from "../components/TeamTable";
 import DeleteTeamPopup from "../components/deleteTeamPopup";
+import AddTeamPopup from "../components/AddTeamPopup";
+import EditTeamPopup from "../components/EditTeamPopup";
 
 export default function TeamPage() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [deleteTeamVisible, setDeleteTeamVisible] = useState<boolean>(false);
+  const [addTeamVisible, setAddTeamVisible] = useState<boolean>(false);
+  const [editTeamVisible, setEditTeamVisible] = useState<boolean>(false);
 
   console.log("Teams:", teams);
 
@@ -35,6 +39,48 @@ export default function TeamPage() {
     }
   }
 
+  async function addTeam(formData) {
+    console.log("Form Data", formData);
+
+    try {
+      const formattedData = {
+        Tm: formData.Name,
+        ACR: formData.Acronym,
+        G: formData["Games Played"],
+        FG: formData["Field Goals Made"],
+        FGA: formData["Field Goals Attempted"],
+        "3P": formData["3 Pointers Made"],
+        "3PA": formData["3 Pointers Attempted"],
+        "2P": formData["2 Pointers Made"],
+        "2PA": formData["2 Pointers Attempted"],
+        FT: formData["Free Throws Made"],
+        FTA: formData["Free Throws Attempted"],
+        PTS: formData["Total Points"],
+        W: formData.Wins,
+        L: formData.Losses,
+      };
+      const response = await fetch("http://localhost:5001/add-team", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formattedData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Team added successfully!");
+        window.location.reload();
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error adding team:", error);
+      alert("Failed to add team. Please try again.");
+    }
+  }
+
   return (
     <div className={"bg-gray-200 flex w-full min-h-screen justify-center "}>
       <div className={"bg-white w-4/5 m-3 py-3 px-5 rounded-lg"}>
@@ -48,7 +94,10 @@ export default function TeamPage() {
             <button className={"px-4 py-2 bg-gray-300"}>Edit</button>
           </div> */}
           <div className="flex space-x-2">
-            <button className="px-5 py-2 bg-green-500 rounded-md shadow-md hover:bg-green-600 hover:shadow-lg hover:cursor-pointer transition">
+            <button
+              onClick={() => setAddTeamVisible(!addTeamVisible)}
+              className="px-5 py-2 bg-green-500 rounded-md shadow-md hover:bg-green-600 hover:shadow-lg hover:cursor-pointer transition"
+            >
               Add Team
             </button>
 
@@ -59,7 +108,10 @@ export default function TeamPage() {
               Delete Team
             </button>
 
-            <button className="px-5 py-2 bg-gray-300 rounded-md shadow-md hover:bg-gray-400 hover:shadow-lg hover:cursor-pointer transition">
+            <button
+              onClick={() => setEditTeamVisible(!editTeamVisible)}
+              className="px-5 py-2 bg-gray-300 rounded-md shadow-md hover:bg-gray-400 hover:shadow-lg hover:cursor-pointer transition"
+            >
               Edit
             </button>
           </div>
@@ -69,6 +121,16 @@ export default function TeamPage() {
           setDeleteTeamVisible={setDeleteTeamVisible}
           deleteTeam={deleteTeam}
           teams={teams}
+        />
+        <AddTeamPopup
+          addTeamVisible={addTeamVisible}
+          setAddTeamVisible={setAddTeamVisible}
+          addTeam={addTeam}
+        />
+        <EditTeamPopup
+          teams={teams}
+          editTeamVisible={editTeamVisible}
+          setEditTeamVisible={setEditTeamVisible}
         />
         <TeamTable data={teams} />
       </div>
