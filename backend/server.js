@@ -21,9 +21,7 @@ mongoose
 // API Routes
 app.get("/players", async (req, res) => {
   try {
-    console.log("Getting Players");
     const players = await Player.find();
-    console.log(players);
     res.json(players);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -32,12 +30,32 @@ app.get("/players", async (req, res) => {
 
 app.get("/teams", async (req, res) => {
   try {
-    console.log("Getting Teams");
     const teams = await Team.find();
-    console.log(teams);
     res.json(teams);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/teams/topWins", async (req, res) => {
+  try {
+    console.log("Get Top teams");
+    const topTeams = await Team.aggregate([
+      {
+        $project: {
+          _id: 0,
+          Tm: "$Tm",
+          W: "$W",
+        },
+      },
+      { $sort: { W: -1 } },
+      { $limit: 5 },
+    ]);
+
+    res.json(topTeams);
+  } catch (err) {
+    console.error("Failed to fetch top 5 teams by wins:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -62,9 +80,6 @@ app.delete("/teams/:id", async (req, res) => {
 
 app.post("/add-team", async (req, res) => {
   try {
-    // Log the received request body
-    console.log("Received data:", req.body);
-
     // Validate required fields
     const requiredFields = [
       "Tm",
